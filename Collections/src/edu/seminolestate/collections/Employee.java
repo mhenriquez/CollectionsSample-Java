@@ -8,17 +8,25 @@ package edu.seminolestate.collections;
  */
 public class Employee {
 	
-	//Instance variables
+	// Instance variables
+	
 	private String employeeId;
 	private String firstName;
 	private String lastName;
 	private double annualSalary;
 	
-	public Employee(String employeeId, String firstName, String lastName, double annualSalary){
-		
+	// Constructor
+	
+	public Employee(String id, String fName, String lName, double salary){
+		employeeId = id;
+		firstName = fName;
+		lastName = lName;
+		annualSalary = salary;
 	}
 	
-	//Employee ID
+	// Class methods
+	
+	// Employee ID
 	public String getEmployeeId(){
 		return employeeId;
 	}
@@ -26,7 +34,7 @@ public class Employee {
 		employeeId = id;
 	}
 	
-	//First Name
+	// First Name
 	public String getFirstName(){
 		return firstName;
 	}
@@ -34,7 +42,7 @@ public class Employee {
 		firstName = fname;
 	}
 	
-	//Last Name
+	// Last Name
 	public String getLastNmae(){
 		return lastName;
 	}
@@ -42,7 +50,7 @@ public class Employee {
 		lastName = lname;
 	}
 	
-	//Annual Salary
+	// Annual Salary
 	public double getAnnualSalary(){
 		return annualSalary;
 	}
@@ -50,6 +58,7 @@ public class Employee {
 		annualSalary = salary;
 	}
 	
+	// List Employee Properties
 	public String toString(){
 		return employeeId + "\n" +
 				firstName + "\n" +
