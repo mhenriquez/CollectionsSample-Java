@@ -49,24 +49,43 @@ public class CollectionsApplication {
 				}
 			}
 			
+			String id = "";
+			double amt = 0;
+			
 			switch(selection){
 				case 1:
 					// Add a new employee
-					Employee emp = setNewEmployee();
 					
-					//employeeMap.put(emp.getEmployeeId(), emp.getFirstName());
+					Employee emp = setNewEmployee();
+					employeeMap.put(emp.getEmployeeId(), emp.getFirstName());
 					
 					break;
 				case 2:
 					// Update salary of employee
 					
+					// Enter ID
+					System.out.println("Enter Employee ID:");
+					id = input.next();
+					
+					// Enter Annual Salary
+					System.out.println("Enter Employee Annual Salary:");
+					amt = input.nextDouble();
+					
 					break;
 				case 3: 
 					// Delete an employee
 					
+					// Enter ID
+					System.out.println("Enter Employee ID:");
+					id = input.next();
+					
 					break;
 				case 4:
 					// List an employee
+					
+					// Enter ID
+					System.out.println("Enter Employee ID:");
+					id = input.next();
 					
 					break;
 				case 5:
@@ -83,7 +102,7 @@ public class CollectionsApplication {
 	/*
 	 * Update an employees annual salary
 	 */
-	public static void setNewEmployeeSalary(int id, double amt){
+	public static void setNewEmployeeSalary(String id, double amt){
 		throw new NotImplementedException();
 	}
 	
@@ -97,7 +116,7 @@ public class CollectionsApplication {
 	/*
 	 * List an employee by ID
 	 */
-	public static void listEmployee(int id){
+	public static void listEmployee(String id){
 		throw new NotImplementedException();
 	}
 	
@@ -134,7 +153,7 @@ public class CollectionsApplication {
 	/*
 	 * Delete an employee by ID
 	 */
-	public static void deleteEmployee(int id){
+	public static void deleteEmployee(String id){
 		throw new NotImplementedException();
 	}
 }
