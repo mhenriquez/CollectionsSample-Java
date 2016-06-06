@@ -13,15 +13,18 @@ public class CollectionsApplication {
 	public static void main(String[] args) {
 		
 		// Local variable
+		Employee employee;
+		String employeeID;
 		int selection = 0;
 		
 		// Instantiate new scanner object
 		Scanner input = new Scanner(System.in);
 		
-		// Instantiate new Map object
-		Map<Object, String> employeeMap = new TreeMap<Object, String>();
+		// Create new Sorted Map to store employee objects
+		Map<String, Employee> employeeMap = new TreeMap<String, Employee>();
 		
-		//SortedMap employeeMap = new TreeMap();
+		// Create new Set from Map
+		Set<Map.Entry<String, Employee>> employeeSet = employeeMap.entrySet();
 		
 		do{
 			// Menu with employee options
@@ -45,79 +48,130 @@ public class CollectionsApplication {
 				// check if selected digit is over 5 
 				// and exit application if true
 				if(selection > 5){
+					System.out.println();
+					System.out.println("Good Bye");
+					System.out.println();
 					System.exit(0);
 				}
 			}
 			
-			String id = "";
-			double amt = 0;
-			
 			switch(selection){
 				case 1:
-					// Add a new employee
+					// Create new employee object
+					employee = setNewEmployee();
 					
-					Employee emp = setNewEmployee();
-					employeeMap.put(emp.getEmployeeId(), emp.getFirstName());
-					
+					// Add new employee if not in Map
+					if(keyExists(employeeMap, employee.getEmployeeId()) == true){
+						System.out.println();
+						System.out.println("Fail: ID already exists.");
+						System.out.println();
+					} else {
+						employeeMap.put(employee.getEmployeeId(), employee);
+						System.out.println();
+						System.out.println("Entry Successful");
+						System.out.println();
+					}
 					break;
 				case 2:
 					// Update salary of employee
 					
 					// Enter ID
 					System.out.println("Enter Employee ID:");
-					id = input.next();
+					employeeID = input.next();
 					
 					// Enter Annual Salary
-					System.out.println("Enter Employee Annual Salary:");
-					amt = input.nextDouble();
+					System.out.println("Enter New Annual Salary:");
+					double amt = input.nextDouble();
 					
+					for(Map.Entry<String, Employee> entry : employeeSet){
+						employee = entry.getValue();
+						if(entry.getKey().equals(employeeID)){
+							 employee.setAnnualSalary(amt);
+						} else {
+					    	 System.out.println();
+					    	 System.out.println("Fail: Employee Not Found.");
+					    	 System.out.println();
+					    }
+					}
 					break;
 				case 3: 
 					// Delete an employee
 					
 					// Enter ID
 					System.out.println("Enter Employee ID:");
-					id = input.next();
+					employeeID = input.next();
 					
+					for(Iterator<Map.Entry<String, Employee>> iter = employeeMap.entrySet().iterator(); iter.hasNext(); ) {
+				      Map.Entry<String, Employee> entry = iter.next();
+				      if(entry.getKey().equals(employeeID)){
+				        iter.remove();
+				        System.out.println();
+						System.out.println("ID:" + employeeID + " Deleted");
+						System.out.println();
+				      } else {
+				    	System.out.println();
+				    	System.out.println("Fail: Employee Not Found.");
+				    	System.out.println();
+				      }
+				    }
 					break;
 				case 4:
-					// List an employee
-					
-					// Enter ID
+					// List an employee by ID
 					System.out.println("Enter Employee ID:");
-					id = input.next();
+					employeeID = input.next();
 					
+					for(Map.Entry<String, Employee> entry : employeeSet){
+						employee = entry.getValue();
+						if(entry.getKey().equals(employeeID)){
+							System.out.println("ID: " + employee.getEmployeeId()); 
+							System.out.println("Name: " + employee.getFirstName() + " " + employee.getLastNmae());
+				    	    System.out.printf("Salary: $%.2f", employee.getAnnualSalary());
+				    	    System.out.println();
+				    	    System.out.println();
+						} else {
+				    	    System.out.println();
+				    	    System.out.println("Fail: Employee Not Found.");
+				    	    System.out.println();
+						}
+					}
 					break;
 				case 5:
-					// List all employees
-					
+					// List all employees by looping through
+					// employee object and listing all the entries
+					for(Map.Entry<String, Employee> entry : employeeSet){
+						employee = entry.getValue();
+						System.out.println("ID: " + employee.getEmployeeId());
+						System.out.println("Name: " + employee.getFirstName() + " " + employee.getLastNmae());
+						System.out.printf("Salary: $%.2f", employee.getAnnualSalary());
+						System.out.println();
+						System.out.println();
+					}
 					break;
 				default:
 					break;
 			}
-			
 		}while(selection < 6);
 	}
 	
 	/*
-	 * Update an employees annual salary
+	 * Check if key exists in Map and return false if not found
 	 */
-	public static void setNewEmployeeSalary(String id, double amt){
-		throw new NotImplementedException();
-	}
-	
-	/*
-	 * List all the employees
-	 */
-	public static void listAllEmployees(){
-		throw new NotImplementedException();
-	}
-	
-	/*
-	 * List an employee by ID
-	 */
-	public static void listEmployee(String id){
-		throw new NotImplementedException();
+	public static boolean keyExists(Map<String, Employee> map, String eid){
+		// Get keys from Map
+		Set<String> keys = map.keySet();
+		
+		// Sort keys
+		TreeSet<String> sortedKeys = new TreeSet<>(keys);
+		
+		// Iterate through each key
+		for(String key : sortedKeys){
+			// If a match is found...
+			if(key.equals(eid)){
+				// return true
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/*
@@ -148,12 +202,5 @@ public class CollectionsApplication {
 		Employee newEmployee = new Employee(id, fname, lname, salary);
 		
 		return newEmployee;
-	}
-	
-	/*
-	 * Delete an employee by ID
-	 */
-	public static void deleteEmployee(String id){
-		throw new NotImplementedException();
 	}
 }
